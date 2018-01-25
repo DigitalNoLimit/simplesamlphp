@@ -149,7 +149,7 @@ class SimpleSAML_Metadata_MetaDataStorageHandlerFlatFile extends SimpleSAML_Meta
     /**
      * @param string $set
      */
-    public function addValidSet(string $set)
+    public static function addValidSet(string $set)
     {
         self::$validSets[] = $set;
     }
