@@ -33,6 +33,10 @@ class SimpleSAML_Metadata_MetaDataStorageHandlerFlatFile extends SimpleSAML_Meta
 	 */
 	private $cachedMetadata = array();
 
+    /**
+     * @var array
+     */
+	private static $config = [];
 
 	/**
 	 * This constructor initializes the flatfile metadata storage handler with the
@@ -82,6 +86,10 @@ class SimpleSAML_Metadata_MetaDataStorageHandlerFlatFile extends SimpleSAML_Meta
 		$metadata = array();
 
 		include($metadatasetfile);
+
+        if(!empty(self::$config['AssertionConsumerService']) && !empty($metadata['WSPSF']['AssertionConsumerService'])) {
+            $metadata['WSPSF']['AssertionConsumerService'] = self::$config['AssertionConsumerService'];
+        }
 
 		if (!is_array($metadata)) {
 			throw new Exception('Could not load metadata set [' . $set . '] from file: ' . $metadatasetfile);
@@ -153,6 +161,15 @@ class SimpleSAML_Metadata_MetaDataStorageHandlerFlatFile extends SimpleSAML_Meta
     {
         self::$validSets[] = $set;
     }
+
+    /**
+     * @param array $config
+     */
+    public static function setConfig(array $config)
+    {
+        self::$config = $config;
+    }
+
 }
 
 ?>
