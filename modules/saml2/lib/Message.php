@@ -557,7 +557,10 @@ class sspmod_saml2_Message {
 
 		$a->setIssuer($srcMetadata->getString('entityid'));
 		$a->setDestination($consumerURL);
-		$a->setValidAudiences(array($dstMetadata->getString('entityid')));
+
+		if($srcMetadata->getBoolean('audiences', null)) {
+		    $a->setValidAudiences(array($dstMetadata->getString('entityid')));
+        }
 
 		$a->setNotBefore(time() - 30);
 
